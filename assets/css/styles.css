@@ -18,3 +18,23 @@ html, body {
     font-size: 5rem;
     text-align:center;
 }
+
+.form-inline{
+    display: inline-block;
+}
+
+a{
+    text-decoration: none !important;
+}
+
+.form-inline .delete {
+    border: none;
+    background: none;
+    color: #007bff;
+    margin:0;
+    padding:0;
+}
+
+.form-inline > .delete:hover {
+    color: #0056B3;
+}

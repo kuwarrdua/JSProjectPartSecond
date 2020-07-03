@@ -42,6 +42,8 @@ app.use(flash());
 app.use('/',(req,res,next) =>{
     //setting default locals
     res.locals.pageTitle  = 'untitled';
+    res.locals.formData = req.session.formData || {};
+    req.session.formData = {};
     //passing along flash messages
     res.locals.flash = req.flash();
     console.log(res.locals.flash);
