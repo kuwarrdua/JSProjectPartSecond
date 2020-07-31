@@ -1,16 +1,23 @@
 <%- include ('../partials/header') %>
-<div class="container">
-    <header class="container my-5">
-        <h1><%= blog.title %>
-            <a href="/blogs/<%= blog.id %>/edit">
-                <i class="fa fa-edit"></i>
-            </a>
-        </h1>
-        <br>
-        <small><%= (blog.updatedAt.toLocaleString("en-CA")) %></small>
-    </header>
-    <hr>
-    <div class="content">
-        <%- blog.content %>
-    </div>
+
+<div class="container my-5">
+  <header>
+    <h1>
+      <%= blog.title %>
+      <a href="/blogs/<%= blog.id %>/edit">
+        <i class="fa fa-edit"></i>
+      </a>
+    </h1>
+    <br>
+    <small>
+      <%= (blog.updatedAt.toLocaleString("en-CA")) %>
+    </small>
+    <p><strong>By: <%= blog.user.fullname %></strong></p>
+  </header>
+  <hr>
+  <div class="content">
+    <%- blog.content %>
+  </div>
+</div>
+
 <%- include ('../partials/footer') %>
