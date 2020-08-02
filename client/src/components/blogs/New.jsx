@@ -3,97 +3,103 @@ import { Form, Container } from 'react-bootstrap';
 import Axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 const New = function () {
 
-    //set states to capture input
-    const [inputs, setInputs] = useState({
-        title: '',
-        content: '',
-        status: 'DRAFT'
-    });
+  const [inputs, setInputs] = useState({
+    title: '',
+    content: '',
+    status: 'DRAFT'
+  });
 
-    const [redirect, setRedirect] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
-    const handleSubmit = async event => {
-        event.preventDefault();
+  const handleSubmit = async event => {
+    event.preventDefault();
 
-        try{
-        const resp = await Axios.post('/blogs', inputs);
-        if(resp.status === 200){
-            toast ("The blog was created successfully", {
-                type: toast.TYPE.SUCCESS
-            });
-            setRedirect(true);
-        } else{
-            toast("There was an issue creating the blog", {
-                type: toast.TYPE.ERROR
-            });
-        }
-} catch{
-    toast("There was an issue creating the blog", {
+    try {
+      const resp = await Axios.post('/api/blogs', inputs);
+
+      if (resp.status === 200)  {
+        toast("The blog was created successfully", {
+          type: toast.TYPE.SUCCESS
+        });
+        setRedirect(true);
+      } else {
+        toast("There was an issue creating the blog", {
+          type: toast.TYPE.ERROR
+        });
+      }
+    } catch (error) {
+      toast("There was an issue creating the blog", {
         type: toast.TYPE.ERROR
-    }); 
-}
+      });
     }
-    const handleInputChange = async event => {
-        //so that the event actually gets handled
-        event.persist();
+  };
 
-        const {name, value} = event.target;
+  const handleInputChange = async event => {
+    event.persist();
 
-        setInputs(inputs => ({
-            ...inputs,
-            [name]: value
-        }));
-    };
+    const { name, value } = event.target;
 
-    if(redirect) return (<Redirect to="/blogs"/>);
+    setInputs(inputs => ({
+      ...inputs,
+      [name]: value
+    }));
+  };
 
-    return(
-        <Container className="my-5">
-            <header>
-                <h1>New Blog Post</h1>
-            </header>
-            <hr />
+  if (redirect) return (<Redirect to="/blogs"/>);
 
-            <div>
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group>
-                        <Form.Label>Title:</Form.Label>
-                        <Form.Control
-                            name="title"
-                            onChange={handleInputChange}
-                            value={inputs.title}
-                            />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Content:</Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            name="content"
-                            onChange={handleInputChange}
-                            value={inputs.content}
-                            />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>status:</Form.Label>
-                        <Form.Control
-                        as="select"
-                            name="status"
-                            onChange={handleInputChange}
-                            defaultValue={inputs.status || 'DRAFT'}
-                            >
-                                <option value="DRAFT">draft</option>
-                                <option value="PUBLISHED">published</option>
-                            </Form.Control>
-                    </Form.Group>
-                    <Form.Group>
-                        <button type="submit" className="btn btn-primary">Create</button>
-                    </Form.Group>
-                </Form>
-            </div>
-        </Container>
-    )
+  return (
+    <Container className="my-5">
+      <header>
+        <h1>New Blog Post</h1>
+      </header>
+
+      <hr/>
+
+      <div>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group>
+            <Form.Label>Title:</Form.Label>
+            <Form.Control
+              name="title"
+              onChange={handleInputChange}
+              value={inputs.title}
+            />
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Label>Content:</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="content"
+              onChange={handleInputChange}
+              value={inputs.content}
+            />
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Label>Status:</Form.Label>
+            <Form.Control
+              as="select"
+              name="status"
+              onChange={handleInputChange}
+              defaultValue={inputs.status || 'DRAFT'}
+            >
+              <option value="DRAFT">draft</option>
+              <option value="PUBLISHED">published</option>
+            </Form.Control>
+          </Form.Group>
+
+          <Form.Group>
+            <button type="submit" className="btn btn-primary">Create</button>
+          </Form.Group>
+        </Form>
+      </div>
+    </Container>
+  );
+
 };
 
 export default New;

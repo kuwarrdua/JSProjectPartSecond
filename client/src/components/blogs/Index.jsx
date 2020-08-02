@@ -1,60 +1,56 @@
-//run some code after everything has rendered and other to update code when different states have changed
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-//to fetch something
 import Axios from 'axios';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 const Index = function ({user}) {
 
-    //Just passing in an empty array and it is used to store the blogs in useState
-    const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState([]);
 
-    useEffect(() => {
-        (async () => {
-            await getBlogs();
-        })();
-    }, []);
-// () implicit return {} explicit return
-    const getBlogs = async () => {
-        const blogsResp = await Axios.get('/api/blogs');
-        if(blogsResp.status === 200) setBlogs(blogsResp.data);
-    };  
+  useEffect(() => {
+    (async () => {
+      await getBlogs();
+    })();
+  }, []);
 
-    const deleteBlog = async blog => {
-        try{
-            const resp = await Axios.post('/api/blogs/delete',{
-                id: blog._id});
-            
-            if(resp.status === 200) toast("the blog was deleted successfully", {
-                type: toast.TYPE.SUCCESS});
-                await getBlogs();
-            }
-            
+  const getBlogs = async () => {
+    const blogsResp = await Axios.get('/api/blogs');
+    if (blogsResp.status === 200) setBlogs(blogsResp.data);
+  };
 
-            catch(error) {
-                toast("The blog was not deleted", {
-                    type: toast.TYPE.ERROR
-                }); 
-            }
-        };
-    return(
-        <Container className ="my-5">
-            <header>
-                <h1>Archieve</h1>
-            </header>
-            <hr/>
-        
-            <div className='content'>
-                {blogs && blogs.map((blog, i) => (
-                    <div key={i} className="card my-3">
-                        <div className="card-header clearfix">
-                            <div className="float-left">
-                                <h5 className="card-title">
-                                    {blog.title}
-                                </h5>
-                                {blog.user ? (
+  const deleteBlog = async blog => {
+    try {
+      const resp = await Axios.post('/api/blogs/delete', {
+        id: blog._id
+      });
+
+      if (resp.status === 200) toast("The blog was deleted successfully", {type: toast.TYPE.SUCCESS});
+
+      await getBlogs();
+    } catch (error) {
+      toast("There was an error deleting the blog", {type: toast.TYPE.ERROR});
+    }
+  };
+
+  return (
+    <Container className="my-5">
+      <header>
+        <h1>Archive</h1>
+      </header>
+
+      <hr/>
+
+      <div className="content">
+        {blogs && blogs.map((blog, i) => (
+          <div key={i} className="card my-3">
+            <div className="card-header clearfix">
+              <div className="float-left">
+                <h5 className="card-title">
+                  {blog.title}
+                </h5>
+
+                {blog.user ? (
                   <small>~{blog.user.fullname}</small>
                 ) : null}
               </div>
@@ -82,15 +78,16 @@ const Index = function ({user}) {
                 </Link>
 
                 <button type="button" onClick={() => deleteBlog(blog)}>
-                  <i className="fa fa-trash"></i>
+                  <i className="fa fa-trash" id="btn"></i>
                 </button>
               </div>
             ) : null}
           </div>
         ))}
-            </div>
-        </Container>
-    );
+      </div>
+    </Container>
+  );
+
 };
 
 export default Index;

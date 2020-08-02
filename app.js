@@ -38,25 +38,6 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// //setting up passport JWT
-// const JwtStrategy = require('passport-jwt').Strategy;
-// //how willwe find, where, what to do
-// const opts = {};
-// opts.jwtFromRequest = function (req) {
-//   const token = (req && req.cookies) ? req.cookies['token'] : null;
-//   return token;
-// }
-// //uses it to do the encryption
-// opts.secretOrKey = 'superManSecretKey';
-// passport.use('jwt', new JwtStrategy(opts, function (jwt_payload, done) 
-// {
-//   User.findOne({id: jwt_payload.sub}, function (err,user){
-//     if (err) return done(err, false);
-//     if(user) return done(null, user);
-//     return done(null, false);
-//   })
-// }));
-
 // Set our views directory
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -88,15 +69,14 @@ app.use('/', (req, res, next) => {
 const routes = require('./routes.js');
 app.use('/api', routes);
 
-app.get('/test', (req,res) => {
+app.get('/test', (req, res) => {
   res.status(200).json({message: 'Hello World'});
-})
-
-app.use(express.static(path.join(__dirname, 'client/build')));
-app.get('*', (req,res) => {
-  res.sendFile(path.join(__diname+'/client/build/index.html'));
 });
 
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
 
 // Start our server
 const port = process.env.PORT || 4000;
