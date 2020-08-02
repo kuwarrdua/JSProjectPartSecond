@@ -2,6 +2,7 @@
 const User = require('../models/user');
 const passport = require('passport');
 const viewPath = 'sessions';
+const jwt = require('jsonwebtoken');
 
 exports.new = (req,res) => {
     res.render(`${viewPath}/new`, {
@@ -11,13 +12,34 @@ exports.new = (req,res) => {
 
 exports.create = (req,res, next) => {
     //local is the thing you want to authenticate using
-    passport.authenticate('local', {
-        successRedirect: '/blogs',
-        successFlash: 'You were successfully logged in.',
-        failureRedirect: '/login',
-        failureFlash: 'Invalid Credentials'
-        //passport.authenticate sends back a function defination
-    })(req, res, next);
+    //return res.status(200).json({...req.body, messgae: 'Hello'});
+    passport.authenticate('local', (err, user) => {
+        if (err || !user) return res.status(401).json({
+            status: 'failed',
+            message: 'Not authorized',
+            error: err
+        });
+
+        req.login(user, err => {
+            if (err || !user) return res.status(401).json({
+                status: 'failed',
+                message: 'Not authorized',
+                error: err
+            });
+
+
+            return res.status(200).json({
+                status: 'success',
+                message: 'Logged in successfully',
+                user: {
+                    _id: user._id,
+                    fullname: user.fullname,
+                    email: user.email
+                }
+            })
+    })
+})
+(req, res, next);
 };
 
 exports.delete = (req, res) => {
