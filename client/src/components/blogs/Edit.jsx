@@ -27,7 +27,7 @@ const Edit = function (props) {
         event.preventDefault();
 
         try{
-        const resp = await Axios.post('/blogs/update', inputs);
+        const resp = await Axios.post('/api/blogs/update', inputs);
         if(resp.status === 200){
             toast ("The blog was updated successfully", {
                 type: toast.TYPE.SUCCESS

@@ -18,13 +18,13 @@ const Index = function ({user}) {
     }, []);
 // () implicit return {} explicit return
     const getBlogs = async () => {
-        const blogsResp = await Axios.get('/blogs');
+        const blogsResp = await Axios.get('/api/blogs');
         if(blogsResp.status === 200) setBlogs(blogsResp.data);
-    };
+    };  
 
     const deleteBlog = async blog => {
         try{
-            const resp = await Axios.post('/blogs/delete',{
+            const resp = await Axios.post('/api/blogs/delete',{
                 id: blog._id});
             
             if(resp.status === 200) toast("the blog was deleted successfully", {

@@ -12,7 +12,7 @@ const Logout = ({setUser}) => {
   useEffect(() => {
     (async () => {
       try {
-        const resp = await Axios.get('/logout');
+        const resp = await Axios.get('/api/logout');
 
         if (resp.status === 200) {
           setUser(false);

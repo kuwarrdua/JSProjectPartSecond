@@ -20,7 +20,7 @@ const Login = ({setUser}) => {
     
         try{
     //address and data
-    const resp = await Axios.post('/authenticate', inputs);
+    const resp = await Axios.post('/api/authenticate', inputs);
     console.log(resp);
 
     if(resp.status === 200){
