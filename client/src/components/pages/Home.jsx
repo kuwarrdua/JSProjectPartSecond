@@ -5,7 +5,7 @@ function Home() {
     return(
     <Container style={{height:"100%"}}>
         <header className="home-cta">
-            <h1>Welome Home to my Blog</h1>
+            <h1>Welome to Kuwar's Car World</h1>
         </header>
     </Container>
     );

@@ -6,9 +6,9 @@ import About from './pages/About';
 import Login from './sessions/login';
 import Logout from './sessions/logout';
 
-import Blogs from './blogs/Index';
-import NewBlog from './blogs/New';
-import EditBlog from './blogs/Edit';
+import Cars from './cars/Index';
+import NewBlog from './cars/New';
+import EditBlog from './cars/Edit';
 
 function Routes ({user, setUser}) {
   return (
@@ -27,14 +27,14 @@ function Routes ({user, setUser}) {
           setUser={setUser}
         />
       }/>
-      <Route exact path="/blogs" render={
-        renderProps => <Blogs
+      <Route exact path="/cars" render={
+        renderProps => <Cars
           {...renderProps}
           user={user}
         />
       }/>
-      <Route exact path="/blogs/new" component={NewBlog}/>
-      <Route exact path="/blogs/edit" component={EditBlog}/>
+      <Route exact path="/cars/new" component={NewBlog}/>
+      <Route exact path="/cars/edit" component={EditBlog}/>
     </Switch>
   );
 }

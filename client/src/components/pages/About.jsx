@@ -9,7 +9,7 @@ function About() {
             </header>
             <div>
                 <p>
-                    The autobiograpgy of Kuwar Dua.
+                    The best car dealership in Ontario.
                 </p>
             </div>
         </Container>

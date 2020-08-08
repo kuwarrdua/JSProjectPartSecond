@@ -1,49 +1,27 @@
-//sessions rely on user but not vice versa
-const User = require('../models/user');
+const User = require('../models/User');
 const passport = require('passport');
 const viewPath = 'sessions';
-const jwt = require('jsonwebtoken');
 
-exports.new = (req,res) => {
-    res.render(`${viewPath}/new`, {
-        pageTitle: 'Login'
-    });
+exports.new = (req, res) => {
+  res.render(`${viewPath}/login`, {
+    pageTitle: 'Login'
+  });
 };
 
-exports.create = (req,res, next) => {
-    //local is the thing you want to authenticate using
-    //return res.status(200).json({...req.body, messgae: 'Hello'});
-    passport.authenticate('local', (err, user) => {
-        if (err || !user) return res.status(401).json({
-            status: 'failed',
-            message: 'Not authorized',
-            error: err
-        });
-
-        req.login(user, err => {
-            if (err || !user) return res.status(401).json({
-                status: 'failed',
-                message: 'Not authorized',
-                error: err
-            });
-
-
-            return res.status(200).json({
-                status: 'success',
-                message: 'Logged in successfully',
-                user: {
-                    _id: user._id,
-                    fullname: user.fullname,
-                    email: user.email
-                }
-            })
-    })
-})
-(req, res, next);
+// Step 1: Create an action that will authenticate the user using Passport
+exports.create = (req, res, next) => {
+   passport.authenticate('local', {
+    successRedirect: '/cars',
+    successFlash: 'You were successfully logged in to my website. Enjoy',
+    failureRedirect: '/login',
+    failureFlash: 'Invalid Credentials. Check them correctly and try again'
+    //passport.authenticate sends back a function defination
+})(req, res, next);
 };
 
+// Step 2: Log the user out
 exports.delete = (req, res) => {
-    req.logout();
-    req.flash('success', 'You were logged out successfully');
-    res.redirect('/');
-}
+  req.logout();
+  req.flash('success', 'You were logged out successfully. Thank you!');
+  res.redirect('/');
+};

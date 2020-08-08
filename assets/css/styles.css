@@ -1,40 +1,53 @@
-html, body {
-    height: 100%;
-    width: 100%;
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(to right, #ddd4b7, #c5e28f, #e1e972, #f0c0ca);
+}
+
+header:not(.home-cta), .alert {
+  margin-top: 80px;
 }
 
 .home-cta {
-    background: url('/images/background.jpg');
-    background-size: cover;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background: url('/images/background.jpg');
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.home-cta > h1{
-    text-shadow: 2px 2px 2px rgba(0,0,0,0.5); 
-    font-size: 5rem;
-    text-align:center;
+.home-cta::after {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  content: "";
 }
 
-.form-inline{
-    display: inline-block;
-}
-
-a{
-    text-decoration: none !important;
+.home-cta > h1 {
+  color: #fff;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  font-size: 10rem;
+  text-align: center;
+  z-index: 1;
 }
 
 .form-inline .delete {
-    border: none;
-    background: none;
-    color: #007bff;
-    margin:0;
-    padding:0;
+  border: none;
+  background: none;
+  color: #007bff;
+  margin:0;
+  padding:0;
 }
 
 .form-inline > .delete:hover {
-    color: #0056B3;
+  color: #0056B3;
 }
+
+.jumbotron{
+  text-align: center;
+}
+

@@ -1,10 +1,10 @@
 const router = require('express').Router();
 
-//our resource routes
 (require('./routes/pages'))(router);
-(require('./routes/blogs'))(router);
 (require('./routes/users'))(router);
 (require('./routes/sessions'))(router);
-(require('./routes/images'))(router);
+(require('./routes/cars'))(router);
+
+// Step 1: Add your resource routes to the router composer
 
 module.exports = router;

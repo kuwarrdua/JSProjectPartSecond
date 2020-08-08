@@ -1,11 +1,9 @@
 <% if (flash) { %>
-    <!-- on each iteration it will return the key and the array of flash messages -->
-    <% for(let [alertType, messages] of Object.entries(flash)) {
-        %>
-        <div class="alert alert-<%= alertType %>">
-            <% for(let message of messages){ %>
-            <%= message %><br>
-            <% } %>
-        </div>
+    <% for (let [status, messages] of Object.entries(flash)) { %>
+      <div class="alert alert-<%= status === 'error' ? 'danger' : status %>">
+        <% for (let message of messages) { %>
+          <%= message %>
         <% } %>
-<% } %>
+      </div>
+    <% } %>
+  <% } %>

@@ -48,7 +48,7 @@ const Login = ({setUser}) => {
         console.log(inputs);
     };
 
-    if(redirect) return <Redirect to="/blogs/" />
+    if(redirect) return <Redirect to="/cars/" />
     return(
         <Container className="container my-5">
             <header>

@@ -1,0 +1,36 @@
+<!--
+  Step 1: This is your descretion how you would like to display data,
+  but you must list display only one document based on the passed ID.
+-->
+<%- include ('../partials/header') %>
+
+<div class="container my-5">
+  <header>
+    <h1>
+      <%= car.carMake %> <%= car.model %>
+      <a href="/cars/<%= car.id %>/edit">
+        <i class="fa fa-edit"></i>
+        Change the car info
+      </a>
+    </h1>
+    <br>
+    <p><strong>Seller: <%= car.user.fullname %></strong></p>
+  </header>
+  <hr>
+  <div class="content">
+    This is the car information you have submitted  <strong><%- car.carMake %>, <%- car.model %>, <%- car.year %>, <%- car.warranty %> </strong>
+    <form class="form-inline" action="/cars/delete" method="post" onsubmit="return confirm('Are you sure you want to delete this car information? We are still reviewing it..!?');">
+      <input type="hidden" value="<%= car.id %>" name="id">
+      <button class="delete" type="submit">
+        <i class="fa fa-trash"></i>
+        Delete car Info
+      </button>
+    </form>
+    <div class="container">
+      <p  style="color:crimson"> We are reviewing this car information. Please check again after 3 days. We hope you have an awesome day.<br>
+        Regards-: Kazy's Car World
+      </p>
+  </div>
+</div>
+
+<%- include ('../partials/footer') %>

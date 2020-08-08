@@ -7,9 +7,10 @@ import { toast } from 'react-toastify';
 const New = function () {
 
   const [inputs, setInputs] = useState({
-    title: '',
-    content: '',
-    status: 'DRAFT'
+    carMake: '',
+    year: '',
+    warranty: 'IN WARRANTY',
+    model: ''
   });
 
   const [redirect, setRedirect] = useState(false);
@@ -18,20 +19,20 @@ const New = function () {
     event.preventDefault();
 
     try {
-      const resp = await Axios.post('/api/blogs', inputs);
+      const resp = await Axios.post('/api/cars', inputs);
 
       if (resp.status === 200)  {
-        toast("The blog was created successfully", {
+        toast("The car profile was created successfully", {
           type: toast.TYPE.SUCCESS
         });
         setRedirect(true);
       } else {
-        toast("There was an issue creating the blog", {
+        toast("There was an issue creating the car profile", {
           type: toast.TYPE.ERROR
         });
       }
     } catch (error) {
-      toast("There was an issue creating the blog", {
+      toast("There was an issue creating the car profile", {
         type: toast.TYPE.ERROR
       });
     }
@@ -48,12 +49,12 @@ const New = function () {
     }));
   };
 
-  if (redirect) return (<Redirect to="/blogs"/>);
+  if (redirect) return (<Redirect to="/carss"/>);
 
   return (
     <Container className="my-5">
       <header>
-        <h1>New Blog Post</h1>
+        <h1>New car profile</h1>
       </header>
 
       <hr/>
@@ -61,35 +62,43 @@ const New = function () {
       <div>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-            <Form.Label>Title:</Form.Label>
+            <Form.Label>Car Make:</Form.Label>
             <Form.Control
-              name="title"
+              name="carMake"
               onChange={handleInputChange}
-              value={inputs.title}
+              value={inputs.carMake}
             />
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Content:</Form.Label>
+            <Form.Label>Year:</Form.Label>
             <Form.Control
-              as="textarea"
-              name="content"
+              name="year"
               onChange={handleInputChange}
-              value={inputs.content}
+              value={inputs.year}
             />
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Status:</Form.Label>
+            <Form.Label>Warranty:</Form.Label>
             <Form.Control
               as="select"
-              name="status"
+              name="warranty"
               onChange={handleInputChange}
-              defaultValue={inputs.status || 'DRAFT'}
+              defaultValue={inputs.warranty || 'NOT IN WARRANTY'}
             >
-              <option value="DRAFT">draft</option>
-              <option value="PUBLISHED">published</option>
+              <option value="IN WARRANTY">Waranteed</option>
+              <option value="NOT IN WARRANTY">Not warranteed</option>
             </Form.Control>
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Label>Model:</Form.Label>
+            <Form.Control
+              name="model"
+              onChange={handleInputChange}
+              value={inputs.model}
+            />
           </Form.Group>
 
           <Form.Group>

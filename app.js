@@ -1,10 +1,14 @@
+console.clear();
+/*
+  Step 1: Create a new express app
+*/
 const express = require('express');
 const app = express();
 require('dotenv').config();
-
 const path = require('path');
-
-// Mongo access
+/*
+  Step 2: Setup Mongoose (using environment variables)
+*/
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DB_URI, {
   auth: {
@@ -16,16 +20,14 @@ mongoose.connect(process.env.DB_URI, {
   useCreateIndex: true
 }).catch(err => console.error(`Error: ${err}`));
 
-// Implement Body Parser
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
-// Setup our session
+/*
+  Step 3: Setup and configure Passport
+*/
 const passport = require('passport');
 const session = require('express-session');
 app.use(session({
-  secret: 'any salty secret here',
+  secret: 'Put any secret conversations here',
   resave: true,
   saveUninitialized: false
 }));
@@ -33,12 +35,14 @@ app.use(session({
 // Setting up Passport
 app.use(passport.initialize());
 app.use(passport.session());
-const User = require('./models/user');
+const User = require('./models/User');
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-// Set our views directory
+/*
+  Step 4: Setup the asset pipeline, path, the static paths,
+  the views directory, and the view engine
+*/
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -46,7 +50,16 @@ app.use('/css', express.static('assets/css'));
 app.use('/javascript', express.static('assets/javascript'));
 app.use('/images', express.static('assets/images'));
 
-// Setup flash notifications and defaults
+/*
+  Step 5: Setup the body parser
+*/
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+/*
+  Step 6: Setup our flash helper, default locals, and local helpers (like formData and authorized)
+*/
 const flash = require('connect-flash');
 app.use(flash());
 app.use('/', (req, res, next) => {
@@ -61,11 +74,12 @@ app.use('/', (req, res, next) => {
   // Authentication helper
   res.locals.authorized = req.isAuthenticated();
   if (res.locals.authorized) res.locals.email = req.session.passport.user;
-
   next();
 });
 
-// Our routes
+/*
+  Step 7: Register our route composer
+*/
 const routes = require('./routes.js');
 app.use('/api', routes);
 
@@ -77,7 +91,8 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
-
-// Start our server
+/*
+  Step 8: Start the server
+*/
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Listening on port ${port}`));

@@ -5,7 +5,7 @@ import { Fragment } from 'react';
 function Nav ({user}) {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <Link to="/" className="navbar-brand">Kuwar's Blog</Link>
+      <Link to="/" className="navbar-brand">Kuwar's Car World</Link>
 
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
@@ -21,22 +21,18 @@ function Nav ({user}) {
             <Link to="/about" className="nav-link">About</Link>
           </li>
 
-          <li className="nav-item">
-            <Link to="/contact" className="nav-link">Contact</Link>
-          </li>
-
           <li className="nav-item dropdown">
-            <a href="" className="nav-link dropdown-toggle" id="blogsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Blogs
+            <a href="" className="nav-link dropdown-toggle" id="carsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Kuwar's Car World
             </a>
 
-            <div className="dropdown-menu" aria-labelledby="blogsDropdown">
-              <Link to="/blogs" className="dropdown-item">Archive</Link>
+            <div className="dropdown-menu" aria-labelledby="carsDropdown">
+              <Link to="/cars" className="dropdown-item">Archieve</Link>
 
               {user ? (
                 <Fragment>
                   <div className="dropdown-divider"></div>
-                  <Link to="/blogs/new" className="dropdown-item">New Post</Link>
+                  <Link to="/cars/new" className="dropdown-item">New Post</Link>
                 </Fragment>
               ) : null}
             </div>
